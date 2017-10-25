@@ -28,7 +28,7 @@ class HomePageTest(TestCase):
         self.assertEqual(
           re.sub(self.pattern_input_csrf, '', response.content.decode()),
           re.sub(self.pattern_input_csrf, '', expected_html)
-      )
+        )
 
     def test_home_page_can_save_a_POST_request(self):
         request = HttpRequest()
@@ -38,4 +38,12 @@ class HomePageTest(TestCase):
         response = home_page(request)
 
         self.assertIn('신규 작업 아이템', response.content.decode())
-        
+        expected_html = render_to_string(
+            'home.html',
+            {'new_item_text':'신규 작업 아이템'}
+        )
+        #self.assertEqual(response.content.decode(), expected_html)
+        self.assertEqual(
+          re.sub(self.pattern_input_csrf, '', response.content.decode()),
+          re.sub(self.pattern_input_csrf, '', expected_html)
+        )
